@@ -160,4 +160,13 @@ React
         (or)
         npm create vite
 
+    Integrating Bootstrap
+
+        npm i bootstrap
+
+        node_modules/bootstrap/dist/css/bootstrap.min.css
+        node_modules/bootstrap/dist/js/bootstrap.min.js
+        
+        import these two files into main.tsx.
+
     
