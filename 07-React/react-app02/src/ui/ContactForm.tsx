@@ -21,13 +21,15 @@ export default class ContactForm extends React.Component<ContactFormProps, Conta
     formSubmited = (event:SyntheticEvent) => {
         event.preventDefault();
         this.props.save({...this.state});
-        this.reset();
+        if(!this.state.isEditable){
+            this.setState({ id: 0, fullName: '', mobile: '', mailId: '' });
+        }        
     }
 
     reset = () => {
         this.state.isEditable? 
-            this.props.cancelEdit!(this.state.id) :
-            this.setState({ id: 0, fullName: '', mobile: '', mailId: '' });
+        this.props.cancelEdit!(this.state.id) :
+        this.setState({ id: 0, fullName: '', mobile: '', mailId: '' });
     }
 
     render() {

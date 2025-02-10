@@ -21,10 +21,10 @@ const ContactsListItem = ({ c,del,edit }: ContactsListItemProps) => (
             {c.mailId}
         </div>
         <div className="col-2 text-center">
-            <button type="button" className="btn btn-sm btn-info me-1" onClick={e => edit(c.id)}>
+            <button type="button" className="btn btn-sm btn-info me-1" onClick={_e => edit(c.id)}>
                 <i className="bi bi-pen"></i>
             </button>
-            <button type="button" className="btn btn-sm btn-danger" onDoubleClick={e => del(c.id)}>
+            <button type="button" className="btn btn-sm btn-danger" onDoubleClick={_e => del(c.id)}>
                 <i className="bi bi-trash"></i>
             </button>
         </div>

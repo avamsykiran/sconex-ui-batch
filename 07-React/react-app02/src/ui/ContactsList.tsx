@@ -16,7 +16,7 @@ interface ContactsListState {
 
 export default class ContactsList extends React.Component<ContactsListProps, ContactsListState> {
 
-    constructor(props) {
+    constructor(props:ContactsListProps) {
         super(props);
         this.state = {
             contacts: [
