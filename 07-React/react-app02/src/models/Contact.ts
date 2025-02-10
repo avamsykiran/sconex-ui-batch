@@ -3,4 +3,5 @@ export default interface Contact {
     fullName:string;
     mobile:string;
     mailId:string;
+    isEditable?:boolean;
 }

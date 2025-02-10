@@ -3,9 +3,10 @@ import Contact from "../models/Contact";
 interface ContactsListItemProps {
     c: Contact;
     del: (id:number) => void;
+    edit: (id:number) => void;
 }
 
-const ContactsListItem = ({ c,del }: ContactsListItemProps) => (
+const ContactsListItem = ({ c,del,edit }: ContactsListItemProps) => (
     <div className="row border-bottom p-2">
         <div className="col-1 text-end">
             {c.id}
@@ -20,7 +21,7 @@ const ContactsListItem = ({ c,del }: ContactsListItemProps) => (
             {c.mailId}
         </div>
         <div className="col-2 text-center">
-            <button type="button" className="btn btn-sm btn-info me-1">
+            <button type="button" className="btn btn-sm btn-info me-1" onClick={e => edit(c.id)}>
                 <i className="bi bi-pen"></i>
             </button>
             <button type="button" className="btn btn-sm btn-danger" onDoubleClick={e => del(c.id)}>

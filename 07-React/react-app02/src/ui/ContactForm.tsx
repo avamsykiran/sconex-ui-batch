@@ -7,18 +7,15 @@ interface ContactFormState extends Contact {
 
 interface ContactFormProps {
     save: (contact:Contact) => void;
+    c?:Contact;
+    cancelEdit?:(id:number) => void;
 }
 
 export default class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
 
-    constructor(props) {
+    constructor(props:ContactFormProps) {
         super(props);
-        this.state = {
-            id: 0,
-            fullName: '',
-            mobile: '',
-            mailId: ''
-        }
+        this.state = props.c? {...props.c} : {id: 0, fullName: '', mobile: '',mailId: '' }
     }
 
     formSubmited = (event:SyntheticEvent) => {
@@ -28,11 +25,13 @@ export default class ContactForm extends React.Component<ContactFormProps, Conta
     }
 
     reset = () => {
-        this.setState({ id: 0, fullName: '', mobile: '', mailId: '' });
+        this.state.isEditable? 
+            this.props.cancelEdit!(this.state.id) :
+            this.setState({ id: 0, fullName: '', mobile: '', mailId: '' });
     }
 
     render() {
-        let { id, fullName, mobile, mailId } = this.state;
+        let { id, fullName, mobile, mailId,isEditable } = this.state;
 
         return (
             <form className="row border-bottom p-2" onSubmit={this.formSubmited}>
@@ -53,7 +52,11 @@ export default class ContactForm extends React.Component<ContactFormProps, Conta
                 </div>
                 <div className="col-2 text-center">
                     <button className="btn btn-sm btn-primary me-1">
-                        <i className="bi bi-plus-lg"></i>
+                        {
+                            isEditable ?
+                            <i className="bi bi-floppy"></i>:
+                            <i className="bi bi-plus-lg"></i>
+                        }                        
                     </button>
                     <button type="button" className="btn btn-sm btn-danger" onClick={_e => this.reset()}>
                         <i className="bi bi-x-lg"></i>
