@@ -169,4 +169,113 @@ React
         
         import these two files into main.tsx.
 
+    React Class Component Life Cycle
     
+        constructor()                           is used to initialize the state
+            ↓
+            render()                            generates the dom
+                ↓
+                componentDidMount()             is used to execute any task after the first rendering...!
+                    ↓
+                ---→ /* the component will be idle until 'setState' is called */
+                |    /* when for any reason 'setState' is called */
+                |                               ↓
+                |                               render()                            re-generates the dom
+                |                                   ↓
+                |                                   componentDidUpdate()            is used handle side-effects
+                |                                       ↓
+                -----------------------------------------               
+
+    React Hooks
+
+        A hook is a reactjs function that is used to provide additional features to a function component.
+        A hook can be used only inside a function component.
+        A hook shall be called before executing (invoking or calling) any other task/function.
+
+    React Life Cycle Hooks
+
+        useState            this hook allows a function component to maintain state.
+                            useState accepts the initial value of the state-attribute
+                            and returns an array containing a reader/getter and a writer/setter.
+
+                            let [x,setX] = useSTate<number>(0);
+
+        useEffect           this hook allows a function component to define componentDidMount and componentDidUpdate.
+
+                            useEffect(callBack);
+
+                                the 'callBack' is executed after each and every rendering...!
+
+                            useEffect(callBack,[]);
+
+                                the 'callBack' is executed only once after the first rendering...!
+
+                            useEffect(callBack,[dependencyVariables1,dependencyVAriables2,....]);
+
+                                the 'callBack' is executed after each rendering only if the value of any one of the
+                                dependencyVariables change.
+
+    State Management At Application Level using - Redux
+
+        Redux is simple application level state management tool.
+
+        installation
+
+            npm i @reduxjs/toolkit react-redux
+
+        terms
+
+            store       a store is a central object that holds all the data related to our app.
+                        typically, one application will have only one store.
+
+                        const store = configureStore(reducer : {}, middleware: callBack);
+
+            reducer     is a pure javascript function
+                        this function is to accept the existing state and an action
+                        it returns the modified store according to the action.
+
+                        const reducer = (state,action) => {
+                            
+                            //state is modified according to the incoming action.
+
+                            returns modifiedAction;
+                        }
+
+            action      is an object that represents a task to be performed by a reducer.
+
+                        type property of the action object representing the task
+
+                        payload property of the action that carries the data needed to execute the task
+
+                        eg: addContactAction = { type:"ADD_CONTACT" ,payload:contactObject }
+                        eg: delContactAction = { type:"DEL_CONTACT" ,payload:contactId }
+
+            middleware  is a layer of operations to be executed before an action is passed to 
+                        a reducer.
+            
+            dispatch    is a built-in function of reduxf, that carries an action to the reducer.
+
+        react-redux hooks
+
+            useDispatch     is a hook that returns 'dispatch' function associated with the current store.
+
+            useSelector     is a hook that is used extract required parts of the state.    
+
+        redux provider from react-redux
+
+            Provider        is a component that links the store with the 'App' component.
+
+        redux archetecture
+
+            store -OnChangeOfData---------------------------
+            ↑                      |                       |
+            |                      | useSelector           | useSelector
+            |                      |                       |
+            |                      ↓                       |
+            |                   Component1                 ↓
+            |                      |                    Component2
+            |modifiedState         | useDispatch           | useDispatch
+            |                      | dispatch(action)      | dispatch(action)
+            reducer ←---(action)---|                       |
+                    ←---(action)---------------------------|
+
