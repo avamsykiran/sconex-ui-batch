@@ -279,3 +279,28 @@ React
             reducer ←---(action)---|                       |
                     ←---(action)---------------------------|
 
+    Integrating with rest-api using middleware 'thunk'
+
+        'thunk' means a function returning another function.
+
+        redux-thunk is a middle ware that executes action as a function.
+
+        redux thunk archetecture
+
+            store -OnChangeOfData---------------------------
+            ↑                      |                       |
+            |                      | useSelector           | useSelector
+            |                      |                       |
+            |                      ↓                       |
+            |                   Component1                 ↓
+            |                      |                    Component2
+            |modifiedState         | useDispatch           | useDispatch
+            |                      | dispatch(actionObj)   | dispatch(actionAsAFun)
+            reducer |←-(actionObj)-|                       |
+                    |                               |-----(thunk will execute actionAsAFun)-----------|
+                    |                               |                                                 | 
+                    |←--(waitAction)--------------- |   dispatch(watiActionObj);                      |  
+                    |                               |   axiosCall                                     |  
+                    |←--(succAction)--------------- |       |-success <- dispatch(successActionObj);  |  
+                    |←--(errAction)---------------- |       |-error <- dispatch(errActionObj);        |
+                                                    |-------------------------------------------------|
