@@ -1,7 +1,8 @@
 import { SyntheticEvent, useState } from "react";
 import Contact from "../models/Contact";
 import { useDispatch } from "react-redux";
-import { createAddContactAction, createCancelEditContactAction, createUpdateContactAction } from "../redux/contacts/contactActions";
+import { createCancelEditContactAction } from "../redux/contacts/contactActions";
+import { createAddContactActionThunk, createUpdateContactActionThunk } from "../redux/contacts/contactThunks";
 
 interface ContactFormProps {    
     c?: Contact;    
@@ -11,14 +12,14 @@ const ContactForm = ({ c }: ContactFormProps) => {
 
     let [contact, setContact] = useState<Contact>(c ? { ...c } : { id: 0, fullName: '', mobile: '', mailId: '' });
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     const formSubmited = (event: SyntheticEvent) => {
         event.preventDefault();
         if(contact.isEditable){
-            dispatch(createUpdateContactAction({...contact}));
+            dispatch(createUpdateContactActionThunk({...contact}));
         }else {
-            dispatch(createAddContactAction({...contact}));
+            dispatch(createAddContactActionThunk({...contact}));
             setContact({ id: 0, fullName: '', mobile: '', mailId: '' });
         }
     }

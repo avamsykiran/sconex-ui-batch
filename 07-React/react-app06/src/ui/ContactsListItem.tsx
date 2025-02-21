@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import Contact from "../models/Contact";
-import { createDeleteContactAction, createEditContactAction } from "../redux/contacts/contactActions";
+import { createEditContactAction } from "../redux/contacts/contactActions";
+import { createDeleteContactActionThunk } from "../redux/contacts/contactThunks";
 
 interface ContactsListItemProps {
     c: Contact;
@@ -8,11 +9,11 @@ interface ContactsListItemProps {
 
 const ContactsListItem = ({ c }: ContactsListItemProps) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     const edit = (id:number) => { dispatch(createEditContactAction(id)) };
     
-    const del = (id:number) => { dispatch(createDeleteContactAction(id)) };
+    const del = (id:number) => { dispatch(createDeleteContactActionThunk(id)) };
 
     return (
         <div className="row border-bottom p-2">

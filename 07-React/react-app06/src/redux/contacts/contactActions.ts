@@ -1,19 +1,19 @@
 import { UnknownAction } from "@reduxjs/toolkit";
 import Contact from "../../models/Contact";
 
-export const ADD:string = "ADD CONTACT"; 
-export const UPDATE:string ="UPDATE CONTACT";
-export const DELETE:string ="DELETE CONTACT";
+export const WAIT:string ="WAIT";
+export const ERR:string ="ERR";
+export const REFRESH:string ="REFRESH CONTACTS";
 export const EDIT:string = "EDIT CONTACT";
 export const CANCEL_EDIT:string="CANCEL EDIT CONTACT";
 
 export interface ContactAction extends UnknownAction {    
-    payload?: Contact | number;
+    payload?: Contact[] | string | number;
 }
 
 //action creators
-export const createAddContactAction = (contact:Contact): ContactAction  => ({type:ADD,payload:contact});
-export const createUpdateContactAction = (contact:Contact): ContactAction => ({type:UPDATE,payload:contact});
-export const createDeleteContactAction = (id:number): ContactAction => ({type:DELETE,payload:id});
+export const createWaitForContactsAction = (msg:string): ContactAction => ({type:WAIT,payload:msg});
+export const createErrForContactsAction = (msg:string): ContactAction => ({type:ERR,payload:msg});
+export const createRefreshContactsAction = (contacts:Contact[]): ContactAction => ({type:REFRESH,payload:contacts});
 export const createEditContactAction = (id:number): ContactAction => ({type:EDIT,payload:id});
 export const createCancelEditContactAction = (id:number): ContactAction => ({type:CANCEL_EDIT,payload:id});

@@ -1,43 +1,44 @@
 import Contact from "../../models/Contact"
-import { ADD, CANCEL_EDIT, ContactAction, DELETE, EDIT, UPDATE } from "./contactActions";
+import { CANCEL_EDIT, ContactAction, EDIT, WAIT, ERR, REFRESH } from "./contactActions";
 
-interface ContactReducerState {
-    contacts: Contact[];
-    nextId: number;
+export interface ContactReducerState {
+    contacts?: Contact[];
+    msg?: string;
+    status: ContactStateStatus;
 }
 
-let initailState: ContactReducerState = { contacts: [], nextId: 1 };
+export enum ContactStateStatus {
+    READY, WORK_IN_PROGRESS, ERROR
+}
+
+let initailState: ContactReducerState = { status: ContactStateStatus.READY };
 
 export const contactReducer = (state: ContactReducerState = initailState, action: ContactAction): ContactReducerState => {
-    let { contacts, nextId } = state;
+    let { contacts, msg, status } = state;
 
     let { type, payload } = action;
 
     switch (type) {
-        case ADD:
-            if (payload && typeof payload !== 'number') {
-                let contact: Contact = payload;
-                contact.id = nextId;
-                contacts = [...contacts, contact];
-                nextId = nextId + 1;
-            }
+        case WAIT:
+            msg = payload as string;
+            status = ContactStateStatus.WORK_IN_PROGRESS;
             break;
-        case UPDATE:
-            if (payload && typeof payload !== 'number') {
-                let contactToUpdate: Contact = payload;
-                contacts = contacts.map(c => c.id === contactToUpdate.id ? { ...contactToUpdate, isEditable: undefined } : c);
-            }
+        case ERR:
+            msg = payload as string;
+            status = ContactStateStatus.ERROR;
             break;
-        case DELETE:
-            contacts = contacts.filter(c => c.id !== payload);
+        case REFRESH:
+            msg = undefined;
+            status = ContactStateStatus.READY;
+            contacts = payload as Contact[];
             break;
         case EDIT:
-            contacts = contacts.map(c => c.id === payload ? { ...c, isEditable: true } : c);
+            contacts = contacts?.map(c => c.id === payload ? { ...c, isEditable: true } : c);
             break;
         case CANCEL_EDIT:
-            contacts = contacts.map(c => c.id === payload ? { ...c, isEditable: undefined } : c);
+            contacts = contacts?.map(c => c.id === payload ? { ...c, isEditable: undefined } : c);
             break;
     }
 
-    return { contacts, nextId };
+    return { contacts, msg, status };
 }
