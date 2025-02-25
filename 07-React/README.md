@@ -304,3 +304,42 @@ React
                     |←--(succAction)--------------- |       |-success <- dispatch(successActionObj);  |  
                     |←--(errAction)---------------- |       |-error <- dispatch(errActionObj);        |
                                                     |-------------------------------------------------|
+
+    React Routing
+
+        npm i react-router react-router-dom
+
+        <BrowserRouter>
+            <!- Any thing included here will apper commonly for every route -->
+            <Header />
+
+            <Routes>
+                <!- Any thing included here will apper only to the specifc route -->
+                <Route path="/" element={<WelcomeComponent />} />
+                <Route path="/emps" element={<EmpsList />} />
+                <Route path="/contacts" element={<ContactsList /> } />
+            </Routes>
+            
+            <!- Any thing included here will apper commonly for every route -->
+            <Footer />
+            
+        </BrowserRouter>
+
+        http://localhost:3000/
+            <Header />
+            <WelcoemComponent />
+            <Footer />
+
+        http://localhost:3000/emps
+            <Header />
+            <EmpsList />
+            <Footer />            
+
+        http://localhost:3000/contacts
+            <Header />
+            <ContactList />
+            <Footer />            
+
+        <Link to="path" > LinkText </Link>
+
+        is used instead of 'a' element to create hyper links
